@@ -10,11 +10,12 @@ export default function OAuth() {
     const auth = getAuth(app)
     const dispatch = useDispatch()
     const navigate = useNavigate()
-    const handleGoogleClick = async()=>{
+    const handleGoogleClick = async () =>{
         const provider = new GoogleAuthProvider();
         provider.setCustomParameters({prompt: 'select_account'})
         try {
             const resultsFromGoogle = await signInWithPopup(auth,provider);
+            console.log(resultsFromGoogle);
             const res = await fetch('/api/auth/google',{
                 method:'POST',
                 headers: {'Content-Type':'application/json'},
