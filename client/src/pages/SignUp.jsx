@@ -42,7 +42,7 @@ export default function SignUp() {
       setLoading(false);
       if(res.ok){
         setFormData({ username: "", email: "", password: "" });
-        navigate('/sign-in');
+        navigate('/sign-in');//sign-in page ae cole jabe
       }
       
     } catch (error) {

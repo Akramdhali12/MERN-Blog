@@ -23,6 +23,20 @@ const userSlice = createSlice({
             state.loading = false;
             state.error= action.payload;
         },
+        // --- NEW UPDATE ACTIONS ---
+        updateUserStart: (state) => {
+            state.loading = true;
+            state.error = null;
+        },
+        updateUserSuccess: (state, action) => {
+            state.currentUser = action.payload; // updated user object from backend
+            state.loading = false;
+            state.error = null;
+        },
+        updateUserFailure: (state, action) => {
+            state.loading = false;
+            state.error = action.payload;
+        },
         deleteUserStart:(state)=>{
             state.currentUser=null;
             state.loading = false;
@@ -49,6 +63,9 @@ export const{
     signInStart,
     signInSuccess,
     signInFailure,
+    updateUserStart,   // Export new action
+    updateUserSuccess,  // Export new action
+    updateUserFailure,  // Export new action
     deleteUserStart,
     deleteUserSuccess,
     deleteUserFailure,

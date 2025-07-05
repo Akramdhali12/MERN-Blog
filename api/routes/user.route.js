@@ -1,11 +1,12 @@
 import express from 'express';
-import { deleteUser, signout, test, updateUser } from '../controllers/user.controller.js';
+import { deleteUser, signout, test, updateUser, uploadImage } from '../controllers/user.controller.js';
 import { verifyToken } from '../utils/verifyUser.js';
 
 const router = express.Router();
 
 router.get('/test', test);// test ta asche user.controller.js file theke
-router.put('/update/:userId',verifyToken,updateUser);
+router.put('/update/:userId',verifyToken, updateUser);
+router.post('/upload/profile-picture',verifyToken,uploadImage);
 router.delete('/delete/:userId',verifyToken,deleteUser);
 router.post('/signout', signout);
 
