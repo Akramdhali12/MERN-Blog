@@ -10,7 +10,8 @@ import OAuth from "../components/OAuth";
 
 export default function SignIn() {
   const [formData, setFormData] = useState({});
-  const {loading,error:errorMessage} = useSelector(state=>state.user);
+  const {error:errorMessage} = useSelector(state=>state.user);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   
@@ -24,6 +25,7 @@ export default function SignIn() {
       return dispatch(signInFailure('Please fill out all fields.'));
     };
     try {
+      setLoading(true);
       //redux-toolkit
       dispatch(signInStart());
       const res = await fetch('/api/auth/signin',{
@@ -37,6 +39,7 @@ export default function SignIn() {
         //redux-toolkit
         dispatch(signInFailure(data.message));
       }
+      setLoading(false);
 
       if(res.ok){
         dispatch(signInSuccess(data));
@@ -45,6 +48,7 @@ export default function SignIn() {
       
     } catch (error) {
       dispatch(signInFailure(error.message));
+      setLoading(false);
     }
   };
 

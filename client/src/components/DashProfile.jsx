@@ -57,7 +57,7 @@ export default function DashProfile() {
       formData.append('profilePicture', imageFile);
 
       try {
-        const uploadResponse = await fetch(`/api/user/upload/profile-picture`, { // Your image upload API
+        const uploadResponse = await fetch(`/api/user/update/${currentUser._id}`, { // Your image upload API
           method: 'POST',
           body: formData,
           onUploadProgress: (progressEvent) => {

@@ -1,6 +1,7 @@
 import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import userRoutes from './routes/user.route.js';
 import authRoutes from './routes/auth.route.js';
 import postRoutes from './routes/post.route.js';
@@ -8,7 +9,7 @@ import cookieParser from 'cookie-parser';
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGO)
+mongoose.connect(process.env.MONGO_URL)
     .then(()=>{
         console.log("mongodb is connected");
     }).catch((err)=>{
@@ -20,10 +21,13 @@ const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
+app.use(cors());
+
 app.listen(3000,()=>{
     console.log('server is running on port 3000 !');
 });
 //for run: npm run dev
+
 
 app.use('/api/user',userRoutes);//akhan theke jabe user.route.js file ae 
 app.use('/api/auth',authRoutes);//akhan theke jabe auth.route.js file ae 
