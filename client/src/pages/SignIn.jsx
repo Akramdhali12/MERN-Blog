@@ -48,10 +48,10 @@ export default function SignIn() {
       // }
       setLoading(false);
 
-      // if(res.ok){
+      if(res.ok){
       dispatch(signInSuccess(data));
       navigate('/');
-      // }
+      }
       
     } catch (error) {
       dispatch(signInFailure(error.message));
