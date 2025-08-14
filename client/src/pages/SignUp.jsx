@@ -30,10 +30,19 @@ export default function SignUp() {
       setErrorMessage(null);
       const res = await fetch('/api/auth/signup',{
         method: 'POST',
-        headers:{'Content-Type': 'application/json'},
+        headers:{'Content-Type':'application/json'},
         body:JSON.stringify(formData),
       });
-      const data = await res.json();
+      // Check status first
+      if (!res.ok) {
+      const text = await res.text();
+      throw new Error(text || `HTTP error ${res.status}`);
+      }
+
+      // Safely parse JSON
+      const text = await res.text();
+      const data = text ? JSON.parse(text) : {};
+      // const data = await res.json();
 
       if(data.success === false){
         return setErrorMessage(data.message);

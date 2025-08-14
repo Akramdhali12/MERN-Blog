@@ -30,21 +30,28 @@ export default function SignIn() {
       dispatch(signInStart());
       const res = await fetch('/api/auth/signin',{
         method: 'POST',
-        headers:{'Content-Type': 'application/json'},
+        headers:{'Content-Type':'application/json'},
         body:JSON.stringify(formData),
       });
-      const data = await res.json();
 
-      if(data.success === false){
-        //redux-toolkit
-        dispatch(signInFailure(data.message));
+      // Safely read response
+      const text = await res.text();
+      const data = text ? JSON.parse(text) : {};
+      // const data = await res.json();
+
+      if (!res.ok || data.success === false) {
+      return dispatch(signInFailure(data.message || `HTTP error ${res.status}`));
       }
+      // if(data.success === false){
+      //   //redux-toolkit
+      //   dispatch(signInFailure(data.message));
+      // }
       setLoading(false);
 
-      if(res.ok){
-        dispatch(signInSuccess(data));
-        navigate('/');
-      }
+      // if(res.ok){
+      dispatch(signInSuccess(data));
+      navigate('/');
+      // }
       
     } catch (error) {
       dispatch(signInFailure(error.message));
