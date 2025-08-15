@@ -29,9 +29,9 @@ export const signup = async (req,res,next)=>{
 export const signin = async (req,res,next)=>{
     const {email, password} = req.body;
 
-    if(!email ||!password || email==='' ||password===''){
+    if (!email || !password || email.trim() === '' || password.trim() === '') {
         //next() is middleware
-        next(errorHandler(400,'All fields are required'));
+        return next(errorHandler(400,'All fields are required'));
     }
      try {
         const validUser = await User.findOne({email});
