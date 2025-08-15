@@ -34,6 +34,7 @@ app.use('/api/auth',authRoutes);//akhan theke jabe auth.route.js file ae
 app.use('/api/post',postRoutes);//akhan theke jabe post.route.js file ae 
 
 app.use((err,req,res,next)=>{
+    console.error(err);
     const statusCode = err.statusCode || 500;
     const message = err.message || 'Internal Server error';
     res.status(statusCode).json({
